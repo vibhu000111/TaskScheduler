@@ -219,7 +219,8 @@ __attribute ((naked))void SysTick_Handler (void)
 	//2nd task is to SF2 to store state of task1 lets say
 	__asm volatile("STMDB R0!,{R4-R11}"); // NOW r1 HOLDS the PSP of task1 after pushing R4-R11
 
-	__asm volatile("PUSH {LR}"); // revisit
+	__asm volatile("PUSH {LR}"); // This is done as when systick interrupt occurs before exception entry context of the last execution function is saved along with that LR is loaded with the EXEC_RETURN value that is why 
+	// it is pushed before executing BL instruction as when BL is executed LR will be loaded the new return  value and EXEC_RETURN would be lost
 	//update the array index holding PSP for task1
 
 
